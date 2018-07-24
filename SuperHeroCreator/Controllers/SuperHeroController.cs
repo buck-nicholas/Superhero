@@ -27,9 +27,13 @@ namespace SuperHeroCreator.Controllers
         {
             return View();
         }
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return View();
+            var requiredData =
+                (from x in db.SuperHero
+                 where x.ID == id
+                 select x).First();
+            return View(requiredData);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -46,7 +50,25 @@ namespace SuperHeroCreator.Controllers
             ViewBag.superHero = new SelectList(db.SuperHero);
             return View(superHero);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(SuperHeroModels superHero)
+        {
+            var requiredData =
+                (from x in db.SuperHero
+                 where x.ID == superHero.ID
+                 select x).First();
+            if (ModelState.IsValid)
+            {
+                db.SuperHero.Remove(requiredData);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(superHero);
 
-        
+
+        }
+
+
     }
 }
