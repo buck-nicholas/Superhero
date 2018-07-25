@@ -31,9 +31,13 @@ namespace SuperHeroCreator.Controllers
                 select x;
             return View(requiredData);
         }
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+            var requiredData =
+                (from x in db.SuperHero
+                 where x.ID == id
+                 select x).First();
+            return View(requiredData);
         }
         public ActionResult Delete(int id)
         {
@@ -45,13 +49,29 @@ namespace SuperHeroCreator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,Name,AlterEgo,PrimaryAbility,SecondaryAbility,CatchPhrase")] SuperHeroModels superHero)
+        {
+            var requiredData =
+                (from x in db.SuperHero
+                 where x.ID == superHero.ID
+                 select x).First();
+            requiredData.Name = superHero.Name;
+            requiredData.AlterEgo = superHero.AlterEgo;
+            requiredData.PrimaryAbility = superHero.PrimaryAbility;
+            requiredData.SecondaryAbility = superHero.SecondaryAbility;
+            requiredData.CatchPhrase = superHero.CatchPhrase;
+            db.SaveChanges();            
+            return View(superHero);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name,AlterEgo,PrimaryAbility,SecondaryAbility,CatchPhrase")] SuperHeroModels superHero)
         {
             if (ModelState.IsValid)
             {
                 db.SuperHero.Add(superHero);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             ViewBag.superHero = new SelectList(db.SuperHero);
             return View(superHero);
