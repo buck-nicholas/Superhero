@@ -9,27 +9,36 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Super Hero List", "List", "SuperHero")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+    <nav class="navbar navbar-expand-md fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-header">
+            @Html.ActionLink("Superhero Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
-    </div>
+        <div class="collapse navbar-collapse" id="nav-content">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="nav-item">@Html.ActionLink("Super Hero List", "List", "SuperHero")</li>
+            </ul>
+        </div>
+    </nav>
+    @*<div class="navbar  fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    @Html.ActionLink("Superhero Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="">
+                    <ul class="navbar-nav ml-auto">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Super Hero List", "List", "SuperHero")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
     <div class="container body-content">
         @RenderBody()
         <hr />
