@@ -16,7 +16,15 @@ namespace SuperHeroCreator.Controllers
         {
             return View();
         }
-        public ActionResult Read()
+        public ActionResult Details(int id)
+        {
+            var requiredData =
+                (from x in db.SuperHero
+                 where x.ID == id
+                 select x).First();
+            return View(requiredData);
+        }
+        public ActionResult List()
         {
             var requiredData =
                 from x in db.SuperHero
@@ -41,12 +49,10 @@ namespace SuperHeroCreator.Controllers
         {
             if (ModelState.IsValid)
             {
-                // add to and save to db
                 db.SuperHero.Add(superHero);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.superHero = new SelectList(db.SuperHero);
             return View(superHero);
         }
@@ -62,13 +68,9 @@ namespace SuperHeroCreator.Controllers
             {
                 db.SuperHero.Remove(requiredData);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             return View(superHero);
-
-
         }
-
-
     }
 }
